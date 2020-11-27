@@ -11,7 +11,6 @@ namespace Circustrein_S2_Software
         public List<Animal> Animals { get; private set; }
         public int MaxPoints { get; private set; }
         public int CurrentPoints { get; private set; }
-        public bool WagonIsFull { get; set; }
         public int WagonID { get; private set; }
 
         public Wagon(int wagonID)
@@ -22,6 +21,7 @@ namespace Circustrein_S2_Software
             }
             MaxPoints = 10;
             WagonID = wagonID;
+            Animals = new List<Animal>();
         }
 
         public void AddAnimal(Animal animal)
@@ -30,11 +30,11 @@ namespace Circustrein_S2_Software
             CurrentPoints += (int)animal.AnimalSize;
         }
 
-        public bool CheckAvailablePlaceInWagon(int animalSize)
+        public bool CheckAvailablePlaceInWagon(Animal animal)
         {
             int wagonCapacity = CheckWagonCapacity();
 
-            if (wagonCapacity + animalSize > MaxPoints)
+            if (wagonCapacity + (int)animal.AnimalSize > MaxPoints)
             {
                 return false;
             }
@@ -51,48 +51,56 @@ namespace Circustrein_S2_Software
                 wagonCapacity += (int)item.AnimalSize;
             }
 
+            if (wagonCapacity > 10)
+            {
+                throw new ArgumentException("Wagon capacity cannot exceed 10 points");
+            }
             return wagonCapacity;
         }
 
-        public bool CheckIfAnimalInWagonGetsEaten(Animal animal)
+        public bool CheckIfAnimalsInWagonGetEaten(Animal animal)
         {
             if (animal.CheckIfHerbivore())
-            {
-                return true;
-            }
-
-            bool AnimalEatsOtherAnimals = Animals.Any(a => a.AnimalSize >= animal.AnimalSize);
-
-            if (AnimalEatsOtherAnimals == true)
             {
                 return false;
             }
 
-            return true;
+            foreach (var animalInWagon in Animals)
+            {
+                if (animal.AnimalSize >= animalInWagon.AnimalSize)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool CheckIfPlacedAnimalGetsEaten(Animal animal)
         {
-            bool DangerousAnimal = Animals.Any(a => a.AnimalFood == AnimalFood.Carnivore && a.AnimalSize >= animal.AnimalSize);
 
-            if (DangerousAnimal == true)
+            foreach (var animalInWagon in Animals)
             {
-                return false;
+                if (animalInWagon.AnimalFood == AnimalFood.Carnivore && animalInWagon.AnimalSize >= animal.AnimalSize)
+                {
+                    return true;
+                }
             }
-
-            return true;
+            return false;
         }
 
-        public void PlaceAnimal(Animal animal)
+        public bool PlaceAnimal(Animal animal)
         {
-            bool AvailablePlace = CheckAvailablePlaceInWagon((int)animal.AnimalSize);
-            bool AnimalSurvives = CheckIfPlacedAnimalGetsEaten(animal);
-            bool OtherAnimalsSurvive = CheckIfAnimalInWagonGetsEaten(animal);
+            bool AvailablePlace = CheckAvailablePlaceInWagon(animal);
+            bool AnimalGetsEaten = CheckIfPlacedAnimalGetsEaten(animal);
+            bool OtherAnimalsGetEaten = CheckIfAnimalsInWagonGetEaten(animal);
 
-            if (AvailablePlace == true && AnimalSurvives == true && OtherAnimalsSurvive == true)
+            if (AvailablePlace == true && AnimalGetsEaten == false && OtherAnimalsGetEaten == false)
             {
-                PlaceAnimal(animal);
+                AddAnimal(animal);
+                return true;
             }
+                return false;
         }
     }
 }

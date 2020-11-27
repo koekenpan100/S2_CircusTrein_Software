@@ -41,7 +41,7 @@ namespace Circustrein_S2_Software
 
         public override string ToString()
         {
-            return string.Format("Diet:{0} Size:{1}", AnimalFood.ToString(), AnimalSize.ToString());
+            return string.Format("Food:{0} Size:{1}", AnimalFood.ToString(), AnimalSize.ToString());
         }
     }
 }

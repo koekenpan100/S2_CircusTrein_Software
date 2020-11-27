@@ -3,3 +3,8 @@ D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_S
 D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\obj\Debug\Circustrein_S2_Software.Properties.Resources.resources
 D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\obj\Debug\Circustrein_S2_Software.csproj.GenerateResource.cache
 D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\obj\Debug\Circustrein_S2_Software.csproj.CoreCompileInputs.cache
+D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\bin\Debug\Circustrein_S2_Software.exe.config
+D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\bin\Debug\Circustrein_S2_Software.exe
+D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\bin\Debug\Circustrein_S2_Software.pdb
+D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\obj\Debug\Circustrein_S2_Software.exe
+D:\Git\Personal\S2_CircusTrein_Software\Circustrein_S2_Software\Circustrein_S2_Software\obj\Debug\Circustrein_S2_Software.pdb

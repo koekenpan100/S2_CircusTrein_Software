@@ -26,7 +26,7 @@ namespace Circustrein_S2_Software
 
         public override string ToString()
         {
-            return string.Format("Train has the following wagons:{0}", Wagons.ToString());
+            return string.Format("Train has the following amount of wagons:{0}", Wagons.Count);
         }
     }
 }
