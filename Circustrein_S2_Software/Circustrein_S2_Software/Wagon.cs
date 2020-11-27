@@ -24,10 +24,75 @@ namespace Circustrein_S2_Software
             WagonID = wagonID;
         }
 
-        public void AddAnimal(Animal animal, Wagon wagon)
+        public void AddAnimal(Animal animal)
         {
-            wagon.Animals.Add(animal);
-            wagon.CurrentPoints += (int)animal.AnimalSize;
+            Animals.Add(animal);
+            CurrentPoints += (int)animal.AnimalSize;
+        }
+
+        public bool CheckAvailablePlaceInWagon(int animalSize)
+        {
+            int wagonCapacity = CheckWagonCapacity();
+
+            if (wagonCapacity + animalSize > MaxPoints)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public int CheckWagonCapacity()
+        {
+            int wagonCapacity = 0;
+
+            foreach (var item in Animals)
+            {
+                wagonCapacity += (int)item.AnimalSize;
+            }
+
+            return wagonCapacity;
+        }
+
+        public bool CheckIfAnimalInWagonGetsEaten(Animal animal)
+        {
+            if (animal.CheckIfHerbivore())
+            {
+                return true;
+            }
+
+            bool AnimalEatsOtherAnimals = Animals.Any(a => a.AnimalSize >= animal.AnimalSize);
+
+            if (AnimalEatsOtherAnimals == true)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CheckIfPlacedAnimalGetsEaten(Animal animal)
+        {
+            bool DangerousAnimal = Animals.Any(a => a.AnimalFood == AnimalFood.Carnivore && a.AnimalSize >= animal.AnimalSize);
+
+            if (DangerousAnimal == true)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void PlaceAnimal(Animal animal)
+        {
+            bool AvailablePlace = CheckAvailablePlaceInWagon((int)animal.AnimalSize);
+            bool AnimalSurvives = CheckIfPlacedAnimalGetsEaten(animal);
+            bool OtherAnimalsSurvive = CheckIfAnimalInWagonGetsEaten(animal);
+
+            if (AvailablePlace == true && AnimalSurvives == true && OtherAnimalsSurvive == true)
+            {
+                PlaceAnimal(animal);
+            }
         }
     }
 }
